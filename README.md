@@ -6,4 +6,7 @@ The distractions come in from the right side of the screen.
 If you shoot one of the ducks then you will get one point.
 If you shoot one of the distraction objects then you will lose a point.
 The player with the highest score after 20 seconds will be the winner.
+
+
+For this I used ChatGPT as well as my roommate Justin for help
 # shootgame
