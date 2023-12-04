@@ -8,12 +8,16 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
         self.image = pygame.image.load('assets/sprites/crosshair_blue_small.png')
+        self.boom_image1 = pygame.image.load('assets/sprites/tank_explosion4.png')
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
         self.rect.center = (x, y)
         self.x_speed = 0
         self.y_speed = 0
+        self.current_image = self.image
+        self.switch_duration = 100
+        self.last_switch_time = 0
 
     def move_up(self):
         self.y_speed = -1 * PLAYER_SPEED
@@ -48,20 +52,30 @@ class Player(pygame.sprite.Sprite):
             self.y_speed = 0
         self.rect.x = self.x
         self.rect.y = self.y
+        if pygame.time.get_ticks() - self.last_switch_time >= self.switch_duration:
+            self.current_image = self.image
 
     def draw(self, screen):
-        screen.blit(self.image, self.rect)
+        screen.blit(self.current_image, self.rect)
+
+    def switch_image(self):
+        self.current_image = self.boom_image1
+        self.last_switch_time = pygame.time.get_ticks()
 
 class Player2(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
         self.image = pygame.image.load('assets/sprites/crosshair_red_small.png')
+        self.boom_image2 = pygame.image.load('assets/sprites/tank_explosion4.png')
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
         self.rect.center = (x, y)
         self.x_speed = 0
         self.y_speed = 0
+        self.current_image = self.image
+        self.switch_duration = 100
+        self.last_switch_time = 0
 
     def move_up(self):
         self.y_speed = -1 * PLAYER_SPEED
@@ -96,7 +110,13 @@ class Player2(pygame.sprite.Sprite):
             self.y_speed = 0
         self.rect.x = self.x
         self.rect.y = self.y
+        if pygame.time.get_ticks() - self.last_switch_time >= self.switch_duration:
+            self.current_image = self.image
 
     def draw(self, screen):
-        screen.blit(self.image, self.rect)
+        screen.blit(self.current_image, self.rect)
+
+    def switch_image(self):
+        self.current_image = self.boom_image2
+        self.last_switch_time = pygame.time.get_ticks()
 

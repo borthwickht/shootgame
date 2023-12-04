@@ -3,7 +3,6 @@
 import pygame
 import random
 from game_parameters import *
-
 class Bottle(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
@@ -14,10 +13,10 @@ class Bottle(pygame.sprite.Sprite):
         self.x = x
         self.y = y
         self.speed = random.uniform(MIN_JUNK_SPEED, MAX_JUNK_SPEED)
-        self.rect.center = (x,y)
+        self.rect.center = (x, y)
 
-    def update(self):
-        self.x -= self.speed
+    def update(self, new=0):
+        self.x -= self.speed + new
         self.rect.x = self.x
 
     def draw(self, surf):
@@ -37,8 +36,8 @@ class Notebook(pygame.sprite.Sprite):
         self.speed = random.uniform(MIN_JUNK_SPEED, MAX_JUNK_SPEED)
         self.rect.center = (x,y)
 
-    def update(self):
-        self.x -= self.speed
+    def update(self, new=0):
+        self.x -= self.speed + new
         self.rect.x = self.x
 
     def draw(self, surf):
@@ -58,8 +57,8 @@ class Salt(pygame.sprite.Sprite):
         self.speed = random.uniform(MIN_JUNK_SPEED, MAX_JUNK_SPEED)
         self.rect.center = (x,y)
 
-    def update(self):
-        self.x -= self.speed
+    def update(self, new=0):
+        self.x -= self.speed + new
         self.rect.x = self.x
 
     def draw(self, surf):

@@ -50,16 +50,27 @@ bottle_hit = pygame.mixer.Sound("assets/sounds/glass_shatter_c.wav")
 notebook_hit = pygame.mixer.Sound("assets/sounds/paper_tearing.wav")
 salt_hit = pygame.mixer.Sound("assets/sounds/metal_crunch.wav")
 done = pygame.mixer.Sound("assets/sounds/buzzer_x.wav")
+pygame.mixer.music.load("assets/sounds/enchanted-chimes.mp3")
+
+# play background music
+pygame.mixer.music.play(-1)
+
+# set time limit
+time_limit = 20
+
+# get initial time
+start_time = pygame.time.get_ticks() / 1000 # convert to seconds because get_ticks is milliseconds
+
+# set up time to switch between target and explosion images
+switch_time = 500
+last_switch_time = pygame.time.get_ticks()
 
 while running:
-    if score1 > 10:
-        running = False
-    if score2 > 10:
-        running = False
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        # control fish with keyboard
+        # control players with keyboard
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
                 player.move_up()
@@ -81,6 +92,7 @@ while running:
             # check for player1 shooting duck
             for duck in ducks:
                 if event.key == pygame.K_m:
+                    player.switch_image()
                     hit = pygame.sprite.spritecollide(player, ducks, True)
                     if hit:
                         pygame.mixer.Sound.play(duck_hit)
@@ -89,6 +101,7 @@ while running:
             # check for player 1 shooting bottle
             for bottle in bottles:
                 if event.key == pygame.K_m:
+                    player.switch_image()
                     miss1 = pygame.sprite.spritecollide(player, bottles, True)
                     if miss1:
                         pygame.mixer.Sound.play(bottle_hit)
@@ -97,6 +110,7 @@ while running:
             # check for player 1 shooting salt
             for salt in salts:
                 if event.key == pygame.K_m:
+                    player.switch_image()
                     miss2 = pygame.sprite.spritecollide(player, salts, True)
                     if miss2:
                         pygame.mixer.Sound.play(salt_hit)
@@ -105,6 +119,7 @@ while running:
             # check for player 1 shooting notebook
             for notebook in notebooks:
                 if event.key == pygame.K_m:
+                    player.switch_image()
                     miss3 = pygame.sprite.spritecollide(player, notebooks, True)
                     if miss3:
                         pygame.mixer.Sound.play(notebook_hit)
@@ -114,6 +129,7 @@ while running:
             # check for player2 shooting duck
             for duck in ducks:
                 if event.key == pygame.K_c:
+                    player2.switch_image()
                     hit = pygame.sprite.spritecollide(player2, ducks, True)
                     if hit:
                         pygame.mixer.Sound.play(duck_hit)
@@ -122,6 +138,7 @@ while running:
             # check for player 2 shooting bottle
             for bottle in bottles:
                 if event.key == pygame.K_c:
+                    player2.switch_image()
                     miss1 = pygame.sprite.spritecollide(player2, bottles, True)
                     if miss1:
                         pygame.mixer.Sound.play(bottle_hit)
@@ -130,6 +147,7 @@ while running:
             # check for player 2 shooting salt
             for salt in salts:
                 if event.key == pygame.K_c:
+                    player2.switch_image()
                     miss2 = pygame.sprite.spritecollide(player2, salts, True)
                     if miss2:
                         pygame.mixer.Sound.play(salt_hit)
@@ -138,6 +156,7 @@ while running:
             # check for player 2 shooting salt
             for notebook in notebooks:
                 if event.key == pygame.K_c:
+                    player2.switch_image()
                     miss3 = pygame.sprite.spritecollide(player2, notebooks, True)
                     if miss3:
                         pygame.mixer.Sound.play(notebook_hit)
@@ -202,11 +221,21 @@ while running:
     player2_score = score_font.render(f"{score2}", True, (255, 0, 0))
     screen.blit(player2_score, (0 + TILE_SIZE, 0))
 
+    # get current time and draw on screen
+    current_time = pygame.time.get_ticks() / 1000  # convert to seconds
+    display_time = score_font.render(f"{current_time}", True, (255, 0, 0))
+    screen.blit(display_time, ((SCREEN_WIDTH / 2) - 55, TILE_SIZE))
+
     # update the display
     pygame.display.flip()
 
     # limit the frame rate
     clock.tick(60)
+
+    # check if the time limit is reached
+    elapsed_time = current_time - start_time
+    if elapsed_time >= time_limit:
+        running = False
 
 # create new background when game over
 screen.blit(background, (0, 0))
@@ -216,15 +245,18 @@ message = score_font.render("GAME OVER", True, (0, 0, 0))
 screen.blit(message, (SCREEN_WIDTH / 2 - message.get_width() / 2, SCREEN_HEIGHT / 2))
 
 # show final score
-score_text = score_font.render(f"Score: Player 1: {score1}, Player 2:{score2}", True, (0, 0, 255))
-screen.blit(score_text, (SCREEN_WIDTH / 2 - score_text.get_width() / 2, SCREEN_HEIGHT / 2 + score_text.get_height()))
-
+if score1 > score2:
+    score_text = score_font.render(f"Player 1 wins {score1} to {score2}", True, (0, 0, 255))
+    screen.blit(score_text, (SCREEN_WIDTH / 2 - score_text.get_width() / 2, SCREEN_HEIGHT / 2 + score_text.get_height()))
+else:
+    score_text = score_font.render(f"Player 2 wins {score2} to {score1}", True, (0, 0, 255))
+    screen.blit(score_text,
+            (SCREEN_WIDTH / 2 - score_text.get_width() / 2, SCREEN_HEIGHT / 2 + score_text.get_height()))
 # update display
 pygame.display.flip()
 
 # play game over sound effect
 pygame.mixer.Sound.play(done)
-
 
 # wait for user to exit the game
 
@@ -234,3 +266,7 @@ while True:
             # Quit pygame
             pygame.quit()
             sys.exit()
+
+# TODO
+    # helped Justin with capping his frame rate so the enemies only shoot once a second
+    # Justin helped me with setting up the timer

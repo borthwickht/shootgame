@@ -16,8 +16,8 @@ class Duck(pygame.sprite.Sprite):
         self.speed = random.uniform(MIN_JUNK_SPEED, MAX_JUNK_SPEED)
         self.rect.center = (x,y)
 
-    def update(self):
-        self.y += self.speed
+    def update(self, new =0):
+        self.y += self.speed + new
         self.rect.y = self.y
 
     def draw(self, surf):
