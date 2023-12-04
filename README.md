@@ -1,6 +1,6 @@
 The basic goal of this game is to outscore the other player.
-player 1 will use the arrow keys incorperated with the m key to shoot.
-player 2 will use the wasd keys to move and the c key to shoot.
+Player 1 will use the arrow keys incorperated with the m key to shoot.
+Player 2 will use the wasd keys to move and the c key to shoot.
 The targets are the ducks falling virtically on the screen.
 The distractions come in from the right side of the screen.
 If you shoot one of the ducks then you will get one point.
