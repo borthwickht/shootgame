@@ -92,7 +92,7 @@ while running:
             # check for player1 shooting duck
             for duck in ducks:
                 if event.key == pygame.K_m:
-                    player.switch_image()
+                    player.switch_image()  # switch image when the player shoots
                     hit = pygame.sprite.spritecollide(player, ducks, True)
                     if hit:
                         pygame.mixer.Sound.play(duck_hit)
@@ -101,7 +101,7 @@ while running:
             # check for player 1 shooting bottle
             for bottle in bottles:
                 if event.key == pygame.K_m:
-                    player.switch_image()
+                    player.switch_image()  # switch image when the player shoots
                     miss1 = pygame.sprite.spritecollide(player, bottles, True)
                     if miss1:
                         pygame.mixer.Sound.play(bottle_hit)
@@ -110,7 +110,7 @@ while running:
             # check for player 1 shooting salt
             for salt in salts:
                 if event.key == pygame.K_m:
-                    player.switch_image()
+                    player.switch_image()  # switch image when the player shoots
                     miss2 = pygame.sprite.spritecollide(player, salts, True)
                     if miss2:
                         pygame.mixer.Sound.play(salt_hit)
@@ -119,7 +119,7 @@ while running:
             # check for player 1 shooting notebook
             for notebook in notebooks:
                 if event.key == pygame.K_m:
-                    player.switch_image()
+                    player.switch_image()  # switch image when the player shoots
                     miss3 = pygame.sprite.spritecollide(player, notebooks, True)
                     if miss3:
                         pygame.mixer.Sound.play(notebook_hit)
@@ -129,7 +129,7 @@ while running:
             # check for player2 shooting duck
             for duck in ducks:
                 if event.key == pygame.K_c:
-                    player2.switch_image()
+                    player2.switch_image()  # switch image when the player shoots
                     hit = pygame.sprite.spritecollide(player2, ducks, True)
                     if hit:
                         pygame.mixer.Sound.play(duck_hit)
@@ -138,7 +138,7 @@ while running:
             # check for player 2 shooting bottle
             for bottle in bottles:
                 if event.key == pygame.K_c:
-                    player2.switch_image()
+                    player2.switch_image()  # switch image when the player shoots
                     miss1 = pygame.sprite.spritecollide(player2, bottles, True)
                     if miss1:
                         pygame.mixer.Sound.play(bottle_hit)
@@ -147,7 +147,7 @@ while running:
             # check for player 2 shooting salt
             for salt in salts:
                 if event.key == pygame.K_c:
-                    player2.switch_image()
+                    player2.switch_image()  # switch image when the player shoots
                     miss2 = pygame.sprite.spritecollide(player2, salts, True)
                     if miss2:
                         pygame.mixer.Sound.play(salt_hit)
@@ -156,7 +156,7 @@ while running:
             # check for player 2 shooting salt
             for notebook in notebooks:
                 if event.key == pygame.K_c:
-                    player2.switch_image()
+                    player2.switch_image()  # switch image when the player shoots
                     miss3 = pygame.sprite.spritecollide(player2, notebooks, True)
                     if miss3:
                         pygame.mixer.Sound.play(notebook_hit)
@@ -187,24 +187,24 @@ while running:
     # check if any salt is off the screen
     for salt in salts:
         if salt.rect.x < -salt.rect.width:  # use the tile size
-            salts.remove(salt)  # remove the fish from the sprite group
+            salts.remove(salt)  # remove the salt from the sprite group
             add_salt(1)
 
     # check if any bottle is off the screen
     for bottle in bottles:
         if bottle.rect.x < -bottle.rect.width:  # use the tile size
-            bottles.remove(bottle)  # remove the fish from the sprite group
+            bottles.remove(bottle)  # remove the bottle from the sprite group
             add_bottle(1)
 
         # check if any notebook is off the screen
         for notebook in notebooks:
             if notebook.rect.x < -notebook.rect.width:  # use the tile size
-                notebooks.remove(notebook)  # remove the fish from the sprite group
+                notebooks.remove(notebook)  # remove the notebook from the sprite group
                 add_notebook(1)
 
         for duck in ducks:
             if duck.rect.y > SCREEN_WIDTH:  # use the tile size
-                ducks.remove(duck)  # remove the fish from the sprite group
+                ducks.remove(duck)  # remove the duck from the sprite group
                 add_duck(1)
 
     # draw game objects
@@ -247,7 +247,8 @@ screen.blit(message, (SCREEN_WIDTH / 2 - message.get_width() / 2, SCREEN_HEIGHT 
 # show final score
 if score1 > score2:
     score_text = score_font.render(f"Player 1 wins {score1} to {score2}", True, (0, 0, 255))
-    screen.blit(score_text, (SCREEN_WIDTH / 2 - score_text.get_width() / 2, SCREEN_HEIGHT / 2 + score_text.get_height()))
+    screen.blit(score_text,
+            (SCREEN_WIDTH / 2 - score_text.get_width() / 2, SCREEN_HEIGHT / 2 + score_text.get_height()))
 else:
     score_text = score_font.render(f"Player 2 wins {score2} to {score1}", True, (0, 0, 255))
     screen.blit(score_text,

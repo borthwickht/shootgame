@@ -1,6 +1,5 @@
 import pygame
 from game_parameters import *
-# from event import *
 
 # create a pygame sprite class for both players to use
 
